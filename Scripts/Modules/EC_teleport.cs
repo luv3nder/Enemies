@@ -5,7 +5,7 @@ using UnityEngine;
 public class EC_teleport : MonoBehaviour
 {
     public dataController DC;
-    public enemy_controller EC;
+    public EnemyController EC;
     public EC_beh_walk EW;
     public ParticleSystem prepareEffect;
     public AudioClip tpSound;
@@ -184,7 +184,7 @@ public class EC_teleport : MonoBehaviour
 
             if (hitCols[i] != null)
             {
-                enemy_controller EC = hitCols[i].GetComponent<enemy_controller>();
+                EnemyController EC = hitCols[i].GetComponent<EnemyController>();
                 if (EC && EC != this.EC && EC.PMS.isTeleportable)
                     return EC.rb;
             }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EC_buff : MonoBehaviour
 {
     public dataController DC;
-    public enemy_controller EC;
+    public EnemyController EC;
     public int trigId;
 
     public ParticleSystem prepareEffect;
@@ -66,13 +66,13 @@ public class EC_buff : MonoBehaviour
             EC.PMS.SetBuff(buffValue.x, buffValue.y, buffValue.z, withText);
 
         if (buffPrefab)
-        Instantiate(buffPrefab, EC.rb.transform.position, Quaternion.identity);
+            Instantiate(buffPrefab, EC.rb.transform.position, Quaternion.identity);
 
         if (buffSound)
             DC.PR.PlaySound(buffSound, EC.rb.position);
 
         if (buffRadius != 0)
-        DC.FF.BuffAll(EC.rb.position, Vector2.one * buffRadius, buffValue, EC.PMS.behaviourId, withText);
+            DC.FF.BuffAll(EC.rb.position, Vector2.one * buffRadius, buffValue, EC.PMS.behaviourId, withText);
 
         TurnOff();
     }

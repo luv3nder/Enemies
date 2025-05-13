@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EC_triggers : MonoBehaviour
 {
-    public enemy_controller EC;
-    public EC_trig_conditions ECTC;
+    public EnemyController EC;
+    public EC_triggers_conditions ECTC;
     [Header("[x - reload, y/z - dist]")]
     public Vector3[] trigArray;
     public bool[] noSight;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy_controller : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public dataController DC;
 
@@ -19,16 +19,16 @@ public class enemy_controller : MonoBehaviour
     public EC_audio AUDIO;
     public EC_pms PMS;
     public EC_states STATES;
+    public EnemyNetwork NW;
     public Collider2D COL;
-    public enemy_network NW;
 
     public int enemyId, arrayId;
     public bool isCopy;
     public Vector2 netPos;
     public Vector2Int spawnPos;
 
-    public enemy_hands hands;
-    public enemy_controller[] parts;
+    public EnemyHands HANDS;
+    public EnemyController[] parts;
 
     [Header("______________________________FX")]
     public SpriteRenderer[] sprenArray;
@@ -70,7 +70,7 @@ public class enemy_controller : MonoBehaviour
     [HideInInspector] public bool isInvulnerable, isGrounded;
     [HideInInspector] public int colIndex, liqIndex;
 
-    enemy_hp_bar hpBar;
+    EnemyHpBar hpBar;
 
 
     void Awake()
@@ -177,7 +177,7 @@ public class enemy_controller : MonoBehaviour
     {
         if (DC.HC != null)
         {
-            hpBar = Instantiate(DC.PP.hpBarPrefab, rb.position, Quaternion.identity).GetComponent<enemy_hp_bar>();
+            hpBar = Instantiate(DC.PP.hpBarPrefab, rb.position, Quaternion.identity).GetComponent<EnemyHpBar>();
             hpBar.EC = this;
             hpBar.transform.parent = DC.HC.transform;
             hpBar.parentRb = rb;
@@ -244,7 +244,7 @@ public class enemy_controller : MonoBehaviour
                 if (PMS.accumOns[1])
                 {
                     DC.PR.PlaySound(DC.PP.burnSound, rb.position);
-                    PMS.SetAccum(1, false);
+                    PMS.SetElement(1, false);
                 }
 
                 liqIndex = 1;
@@ -485,8 +485,8 @@ public class enemy_controller : MonoBehaviour
                 direction,
                 ECA ? ECA.animationId : 0,
                 isGrounded,
-                hands ? hands.transform.eulerAngles : Vector3.zero,
-                hands ? hands.transform.eulerAngles : Vector3.zero);
+                HANDS ? HANDS.transform.eulerAngles : Vector3.zero,
+                HANDS ? HANDS.transform.eulerAngles : Vector3.zero);
         else
         {
             STATES.States();

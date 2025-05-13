@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EC_contact : MonoBehaviour
 {
-    public enemy_controller EC;
+    public EnemyController EC;
     dataController DC;
     public ParticleSystem contactParticles;
 

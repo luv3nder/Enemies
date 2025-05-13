@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EC_beh_mask : MonoBehaviour
+public class EC_beh_fly : MonoBehaviour
 {
     public dataController DC;
     public static_animation SA;
-    public enemy_controller EC;
+    public EnemyController EC;
     Rigidbody2D rb;
 
     public float followChance;

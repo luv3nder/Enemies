@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EC_drop : MonoBehaviour
 {
-    [HideInInspector] public enemy_controller EC;
+    [HideInInspector] public EnemyController EC;
     dataController DC;
     public Vector3Int alwaysDrops;
     [Header("(item id, quantity, chance)")]
@@ -20,7 +20,7 @@ public class EC_drop : MonoBehaviour
             maxItems = 2;
     }
 
-    public void Drop(enemy_controller EC)
+    public void Drop(EnemyController EC)
     {
         this.EC = EC;
 

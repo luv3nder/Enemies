@@ -7,7 +7,7 @@ public class EC_beh_walk : MonoBehaviour
     dataController DC;
 
     [Header("[necessary]")]
-    public enemy_controller EC;
+    public EnemyController EC;
     [Header("[necessary if has pos animation]")]
     public pos_animation PA;
 
@@ -43,7 +43,7 @@ public class EC_beh_walk : MonoBehaviour
 
         // try to get (old)
         if (EC == null)
-            EC = GetComponent<enemy_controller>();
+            EC = GetComponent<EnemyController>();
 
         if (EC.isCopy)
         {
@@ -556,7 +556,7 @@ public class EC_beh_walk : MonoBehaviour
             {
                 float multi = Mathf.Pow(1 + (dmgDiff * DC.CR.fallDmg), 2);
                 if (multi > 1)
-                    EC.PMS.isHit((int)multi, 0.2f, false, 0, EC.rb.position, Vector2.zero, EC.arrayId, Vector2Int.zero, 1);
+                    EC.PMS.IsHit((int)multi, 0.2f, false, 0, EC.rb.position, Vector2.zero, EC.arrayId, Vector2Int.zero, 1);
             }
         }
 

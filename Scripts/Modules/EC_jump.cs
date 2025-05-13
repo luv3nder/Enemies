@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EC_jump : MonoBehaviour
 {
-    public enemy_controller EC;
+    public EnemyController EC;
 
     public int trigId;
 

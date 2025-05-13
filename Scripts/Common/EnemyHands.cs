@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy_hands : MonoBehaviour
+public class EnemyHands : MonoBehaviour
 {
-    public enemy_controller EC;
+    public EnemyController EC;
     public SpriteRenderer spren;
 
     dataController DC;
@@ -30,7 +30,7 @@ public class enemy_hands : MonoBehaviour
     {
         DC = EC.DC;
         PA = EC.PA;
-        EC.hands = this;
+        EC.HANDS = this;
 
         if (EC.isCopy)
             this.enabled = false;

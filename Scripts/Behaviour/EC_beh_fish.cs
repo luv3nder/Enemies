@@ -7,7 +7,7 @@ public class EC_beh_fish : MonoBehaviour
 {
     public dataController DC;
 
-    enemy_controller EC;
+    EnemyController EC;
     Rigidbody2D rb;
 
     public float tresh = 0.1f;
@@ -17,7 +17,7 @@ public class EC_beh_fish : MonoBehaviour
 
     void Start()
     {
-        EC = GetComponent<enemy_controller>();
+        EC = GetComponent<EnemyController>();
         rb = GetComponent<Rigidbody2D>();
 
         projectile_effect PE = Instantiate(DC.PP.bubblePrefab, transform.position, Quaternion.identity).GetComponent<projectile_effect>();

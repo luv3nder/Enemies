@@ -5,7 +5,7 @@ using UnityEngine;
 public class EC_animation : MonoBehaviour
 {
     public SpriteRenderer spren;
-    public enemy_controller EC;
+    public EnemyController EC;
     [Header("0 (walk)")]    
     public Sprite[] spriteArray0;
     [Header("1 (idle)")]
@@ -41,7 +41,7 @@ public class EC_animation : MonoBehaviour
         spren = GetComponent<SpriteRenderer>();
 
         if (!EC)
-            EC = GetComponent<enemy_controller>();
+            EC = GetComponent<EnemyController>();
     }
     public void SetAnim(int id, float animationSpeed)
     {

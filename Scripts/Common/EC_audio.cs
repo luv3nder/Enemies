@@ -4,7 +4,7 @@ public class EC_audio: MonoBehaviour
 {
     dataController DC;
 
-    public enemy_controller EC;
+    public EnemyController EC;
     public AudioSource audioSource;
     public AudioClip customHitSound, customPrepareSound, customDeathSound;
     public bool noSound;

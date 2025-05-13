@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EC_beh_jelly : MonoBehaviour
 {
-    enemy_controller EC;
+    EnemyController EC;
     public dataController DC;
 
     public float dashSpeed, noMoveReduce = 0.99f, stopAtDistance;
@@ -21,7 +21,7 @@ public class EC_beh_jelly : MonoBehaviour
 
     void Start()
     {
-        EC = GetComponent<enemy_controller>();
+        EC = GetComponent<EnemyController>();
         DC = EC.DC;
 
         if (EC.isCopy)

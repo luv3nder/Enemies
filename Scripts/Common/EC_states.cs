@@ -3,7 +3,7 @@ using UnityEngine;
 public class EC_states : MonoBehaviour
 {
     dataController DC;
-    public enemy_controller EC;
+    public EnemyController EC;
 
     public float[] stateTimers;
 
@@ -266,7 +266,7 @@ public class EC_states : MonoBehaviour
         // enemies
         if (!isClear)
         {
-            enemy_controller[] ECs = DC.PR.enemyArray;
+            EnemyController[] ECs = DC.PR.enemyArray;
             for (int i = 0; i < ECs.Length; i++)
                 // behaviour check
                 if (ECs[i] && BehaviourAggro(ECs[i].PMS.behaviourId) && !DC.CR.CheckInvis(ECs[i].PMS.buffTimers))

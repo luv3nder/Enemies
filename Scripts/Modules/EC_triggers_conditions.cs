@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EC_trig_conditions : MonoBehaviour
+public class EC_triggers_conditions : MonoBehaviour
 {
-    public enemy_controller EC;
+    public EnemyController EC;
 
     [Header("[0 - any, 1 - no, 2 - only]")]
     public int[] waterTrigs;

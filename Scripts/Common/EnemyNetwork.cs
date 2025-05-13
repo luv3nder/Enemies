@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class enemy_network: MonoBehaviour
+public class EnemyNetwork: MonoBehaviour
 {
     public EC_dash[] dashes;
     public EC_shoot[] shoots;

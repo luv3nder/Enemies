@@ -6,7 +6,7 @@ public class EC_dash : MonoBehaviour
 {
     dataController DC;
     [Header("[necessary]")]
-    public enemy_controller EC;
+    public EnemyController EC;
     public ParticleSystem prepareEffect;
     public int trigId;
 
@@ -45,7 +45,7 @@ public class EC_dash : MonoBehaviour
 
         // try to get (old)
         if (EC == null)
-            EC = GetComponent<enemy_controller>();
+            EC = GetComponent<EnemyController>();
 
         if (EC.isCopy)
             this.enabled = false;
@@ -114,10 +114,10 @@ public class EC_dash : MonoBehaviour
         if (DC.isMultiplayer && isOG)
             DC.NMI.EnemyFxServerRpc(DC.SID(), EC.arrayId, new Vector3Int(0, trigId, 0));
 
-        if (EC.hands != null)
+        if (EC.HANDS != null)
         {
-            EC.hands.spren.sprite = EC.hands.defaultSprite;
-            EC.hands.SetDash(DC.FF.GetAngle(EC.rb.position, EC.targetRb.position), attDelay, 0);
+            EC.HANDS.spren.sprite = EC.HANDS.defaultSprite;
+            EC.HANDS.SetDash(DC.FF.GetAngle(EC.rb.position, EC.targetRb.position), attDelay, 0);
         }
 
         // anim
@@ -214,8 +214,8 @@ public class EC_dash : MonoBehaviour
     // off
     void TurnOff(bool breaks)
     {
-        if (breaks && EC.hands)
-            EC.hands.HandsBreak();
+        if (breaks && EC.HANDS)
+            EC.HANDS.HandsBreak();
 
         if (animates)
             EC.ECA.SetAnim(0, 0);

@@ -6,7 +6,7 @@ public class EC_beh_worm : MonoBehaviour
 {
     dataController DC;
     Rigidbody2D rb;
-    [HideInInspector] public enemy_controller EC;
+    [HideInInspector] public EnemyController EC;
 
     public int jointNumber;
     public GameObject[] jointPrefabs;
@@ -27,7 +27,7 @@ public class EC_beh_worm : MonoBehaviour
     {
         DC = GM.Inst.DC;
 
-        EC = GetComponent<enemy_controller>();
+        EC = GetComponent<EnemyController>();
         rb = GetComponent<Rigidbody2D>();
 
         Instantiates();
@@ -79,7 +79,7 @@ public class EC_beh_worm : MonoBehaviour
 
         // inst
         joints = new worm_joint[resNumber];
-        EC.parts = new enemy_controller[resNumber];
+        EC.parts = new EnemyController[resNumber];
 
         for (int i = 0; i < resNumber; i++)
         {

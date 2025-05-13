@@ -7,7 +7,7 @@ public class EC_shoot : MonoBehaviour
     dataController DC;
 
     public string name;
-    public enemy_controller EC;
+    public EnemyController EC;
     public ParticleSystem prepareEffect;
 
     public int trigId;
@@ -122,9 +122,9 @@ public class EC_shoot : MonoBehaviour
         if (IsPrepared())
         {
             // hands shot
-            if (EC.hands)
+            if (EC.HANDS)
             {
-                if (EC.hands.isDone)
+                if (EC.HANDS.isDone)
                     Attack();
             }
             // normal shot
@@ -143,8 +143,8 @@ public class EC_shoot : MonoBehaviour
             if (attAngle != 0)
             {
                 // hands
-                if (EC.hands != null)
-                    EC.hands.SetDash(attAngle, attDelay, 0);
+                if (EC.HANDS != null)
+                    EC.HANDS.SetDash(attAngle, attDelay, 0);
             }
             else
             {
@@ -162,12 +162,12 @@ public class EC_shoot : MonoBehaviour
     }
     public void PrepareFx(bool isOG)
     {
-        if (EC.hands)
+        if (EC.HANDS)
         {
             if (handsSprite != null)
-                EC.hands.spren.sprite = handsSprite;
+                EC.HANDS.spren.sprite = handsSprite;
             else
-                EC.hands.spren.sprite = EC.hands.defaultSprite;
+                EC.HANDS.spren.sprite = EC.HANDS.defaultSprite;
         }
 
         if (prepareSound)
@@ -226,8 +226,8 @@ public class EC_shoot : MonoBehaviour
         if (prepareEffect)
             prepareEffect.Stop();
 
-        if (EC.hands != null)
-            EC.hands.isDone = false;
+        if (EC.HANDS != null)
+            EC.HANDS.isDone = false;
 
         if (shootSound)
             DC.PR.PlaySoundVeryExtended(shootSound, transform.position, volumePitch, EC.tilePos);
@@ -251,10 +251,10 @@ public class EC_shoot : MonoBehaviour
     // off
     void TurnOff(bool breaks)
     {
-        if (EC.hands)
+        if (EC.HANDS)
         {
             if (breaks)
-                EC.hands.HandsBreak();
+                EC.HANDS.HandsBreak();
         }
 
         if (prepareEffect)
@@ -287,14 +287,14 @@ public class EC_shoot : MonoBehaviour
     }
     bool HandsCheck()
     {
-        return spawnAtTip && EC.hands != null && EC.hands.tip != null;
+        return spawnAtTip && EC.HANDS != null && EC.HANDS.tip != null;
     }
     Vector2 GetShootPos()
     {
         // pos
         Vector2 pos = transform.position + new Vector3(0, yOffset);
         if (HandsCheck())
-            pos = EC.hands.tip.position;
+            pos = EC.HANDS.tip.position;
 
         return pos;
     }

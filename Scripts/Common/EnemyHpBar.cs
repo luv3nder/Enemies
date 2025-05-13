@@ -3,23 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class enemy_hp_bar : MonoBehaviour
+public class EnemyHpBar : MonoBehaviour
 {
-    RectTransform recttransf;
-    public dataController DC;
-    public enemy_controller EC;
-    public hp_underbar underBar;
+    dataController DC;
     CanvasGroup canvasGroup;
+    RectTransform recttransf;
+
+    public EnemyController EC;
+    public hp_underbar underBar;
 
     public RectTransform barRect;
-
-    float fadeTimer;
-    float prevHealth;
     public float yOffset;
     public Rigidbody2D parentRb;
 
+    float fadeTimer;
+    float prevHealth;
+
     private void Start()
     {
+        DC = EC.DC;
+
         prevHealth = EC.PMS.hitPoints;
         canvasGroup = GetComponent<CanvasGroup>();
         recttransf = GetComponent<RectTransform>();

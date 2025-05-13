@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EC_pms : MonoBehaviour, IDamage
+public class EC_pms : MonoBehaviour, IDamageable
 {
     dataController DC;
-    public enemy_controller EC;
+    public EnemyController EC;
 
     public bool isAimable, isTeleportable, noFlip, noFrighten;
     public bool noBubbles, noSplash, noHpBar;
@@ -57,26 +57,26 @@ public class EC_pms : MonoBehaviour, IDamage
         activeAccumEffects = new projectile_effect[3];
         accumTicks = new float[3];
     }
-
     private void Start()
     {
         Instantiates();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (EC.PMS.hitPoints > 0)
         {
             DC.CR.CalculateEffects(gameObject, accumTimers, accumOns, accumDelays, accumTicks, buffTimers, null, EC.liqIndex, maxHp, effectResists, EC.biomeId);
+            AllRegen();
         }
     }
+
     void Instantiates()
     {
+        // load
         if (EC.enemyId != 0 && EC.enemyId != -1)
             for (int i = 0; i < DC.TT.enemyPms.GetLength(1); i++)
             {
-                int pm = DC.TT.enemyPms[EC.enemyId - 1, i];
+                int pm = DC.TT.enemyPms[EC.enemyId - 1, i]; // int[,] массив с параметрами всех врагов
 
                 if (pm != 0)
                 {
@@ -101,13 +101,39 @@ public class EC_pms : MonoBehaviour, IDamage
                 }
             }
 
+        // default set
         spPoints = 100;
         flPoints = 100;
         hitPoints = maxHp == 0 ? 100 : maxHp;
         balance = balance == 0 ? 1 : balance;
         speed = speed == 0 ? 0.5f : speed;
     }
-    public bool isHit(float hitDamage, float knockBack, bool isPureDamage, int crit, Vector2 hitPos, Vector2 hitVlc, int RBID, Vector2Int effectPms, int dmgType)
+    void AllRegen()
+    {
+        // stam
+        if (spPoints < 100)
+            spPoints += Time.deltaTime * 2;
+        else
+            spPoints = 100;
+
+        // flick
+        if (flPoints < 100)
+            flPoints += Time.deltaTime * 5;
+        else
+            flPoints = 100;
+
+        // hp
+        if (hitPoints < maxHp)
+        {
+            if (DC.CR.CheckHealing(buffTimers) && !DC.CR.CheckPoison(accumOns))
+                hitPoints += Time.deltaTime * maxHp * 0.1f;
+        }
+        else
+            hitPoints = maxHp;
+    }
+
+    // hit
+    public bool IsHit(float hitDamage, float knockBack, bool isPureDamage, int crit, Vector2 hitPos, Vector2 hitVlc, int RBID, Vector2Int effectPms, int dmgType)
     {
         Debug.Log("HIT id: " + EC.enemyId + " dmg: " + hitDamage + " RBID: " + RBID);
 
@@ -139,7 +165,7 @@ public class EC_pms : MonoBehaviour, IDamage
             if (DC.CR.CheckFrost(accumOns) && knockBack > 0)
             {
                 Instantiate(DC.PP.frostExplPrefab, EC.rb.position, Quaternion.identity);
-                SetAccum(2, false);
+                SetElement(2, false);
                 crit = 100;
             }
 
@@ -293,14 +319,39 @@ public class EC_pms : MonoBehaviour, IDamage
 
             // effect
             if (!noAccum && effectPms.y != 0) // (hp after dmg apply)
-                AccHit(effectPms);
+                ElementalHit(effectPms);
 
             return true;
         }
         else
             return false;
     }
-    public void AccHit(Vector2Int effectPms)
+    public int GetHitBehaviourId(int attType)
+    {
+        if (EC.isCopy)
+            return -20;
+
+        return behaviourId;
+    }
+    public int GetHitId()
+    {
+        return EC.arrayId;
+    }
+    public Vector2Int GetHitTilepos()
+    {
+        return EC.tilePos;
+    }
+    public float GetVulnerabilityMulti(int attType)
+    {
+        if (vulnerabilities.Length > 0)
+        {
+            for (int i = 0; i < vulnerabilities.Length; i++)
+                if (vulnerabilities[i].x == attType)
+                    return vulnerabilities[i].y;
+        }
+        return 1;
+    }
+    public void ElementalHit(Vector2Int effectPms)
     {
         // 0
         if (effectPms.y == 0)
@@ -356,10 +407,7 @@ public class EC_pms : MonoBehaviour, IDamage
             }
         }
     }
-    public Vector2Int GetTilepos()
-    {
-        return EC.tilePos;
-    }
+
     public void Heal(int value)
     {
         if (hitPoints + value <= maxHp)
@@ -372,30 +420,7 @@ public class EC_pms : MonoBehaviour, IDamage
         DC.FF.WriteLine(EC.rb.position, line, 1, false, EC.rb, null);
     }
 
-    void AllRegen()
-    {
-        // stam
-        if (spPoints < 100)
-            spPoints += Time.deltaTime * 2;
-        else
-            spPoints = 100;
-
-        // flick
-        if (flPoints < 100)
-            flPoints += Time.deltaTime * 5;
-        else
-            flPoints = 100;
-
-        // hp
-        if (hitPoints < maxHp)
-        {
-            if (DC.CR.CheckHealing(buffTimers) && !DC.CR.CheckPoison(accumOns))
-                hitPoints += Time.deltaTime * maxHp * 0.1f;
-        }
-        else
-            hitPoints = maxHp;
-    }
-
+    // elemental on/off
     public void SetBuff(int index, float setTime, int power, bool withText)
     {
         // on
@@ -426,7 +451,7 @@ public class EC_pms : MonoBehaviour, IDamage
             activeBuffEffects[index] = null;
         }
     }
-    public void SetAccum(int index, bool isOn)
+    public void SetElement(int index, bool isOn)
     {
         if (isOn)
         {
@@ -462,27 +487,5 @@ public class EC_pms : MonoBehaviour, IDamage
                 activeAccumEffects[index] = null;
             }
         }
-    }
-
-    public float GetVulnerabilityMulti(int attType)
-    {
-        if (vulnerabilities.Length > 0)
-        {
-            for (int i = 0; i < vulnerabilities.Length; i++)
-                if (vulnerabilities[i].x == attType)
-                    return vulnerabilities[i].y;
-        }
-        return 1;
-    }
-    public int GetBehaviourId(int attType)
-    {
-        if (EC.isCopy)
-            return -20;
-
-        return behaviourId;
-    }
-    public int GetId()
-    {
-        return EC.arrayId;
     }
 }

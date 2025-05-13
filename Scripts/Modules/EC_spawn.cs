@@ -5,7 +5,7 @@ using UnityEngine;
 public class EC_spawn : MonoBehaviour
 {
     public int trigId;
-    public enemy_controller EC;
+    public EnemyController EC;
 
     [Header("(!) ADD THIS TO EC > SPAWN FOR ON DEATH")]
 
@@ -72,7 +72,7 @@ public class EC_spawn : MonoBehaviour
                 Vector2 posOffset = EC.DC.FF.AngleToVector(curAngle) * spawnOffset;
 
                 GameObject tempo = Instantiate(EC.DC.PP.enemyPrefabs[enemyId - 1], GetPos() + posOffset, Quaternion.identity);
-                enemy_controller curEC = tempo.GetComponent<enemy_controller>();
+                EnemyController curEC = tempo.GetComponent<EnemyController>();
                 curEC.enemyId = enemyId;
                 curEC.rb.linearVelocity = startVlc;
                 curEC.DROP.drops = new Vector3Int[0];             
